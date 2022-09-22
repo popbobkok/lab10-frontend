@@ -7,6 +7,18 @@
 
       <BaseInput v-model="event.title" type="text" label="Title" />
 
+      <h3>Who is your organizer?</h3>
+      <label>Select an Organizer</label>
+      <select v-model="event.organizer.id">
+        <option
+          v-for="option in GStore.organizers"
+          :value="option.id"
+          :key="option.id"
+          :selected="option.id === event.organizer.id"
+        >
+          {{ option.name }}
+        </option>
+      </select>
       <label>Description</label>
       <input
         v-model="event.description"
@@ -41,7 +53,8 @@ export default {
         category: '',
         title: '',
         description: '',
-        location: ''
+        location: '',
+        organizer: { id: '', name: '' }
       }
     }
   },

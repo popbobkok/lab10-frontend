@@ -10,6 +10,7 @@ import NetWorkErrorView from '@/views/NetworkErrorView.vue'
 import AddEvent from '@/views/EventForm.vue'
 import NProgress from 'nprogress'
 import GStore from '@/store'
+import OrganizerService from '@/services/OrganizerService'
 import EventService from '@/services/EventService'
 const routes = [
   {
@@ -68,7 +69,17 @@ const routes = [
   {
     path: '/add-event',
     name: 'AddEvent',
-    component: AddEvent
+    component: AddEvent,
+    beforeEnter: () => {
+      return OrganizerService.getOrganizers()
+        .then((response) => {
+          GStore.organizers = response.data
+        })
+        .catch(() => {
+          GStore.organizers = null
+          console.log('cannot load organizer')
+        })
+    }
   },
   {
     path: '/404/:resource',
