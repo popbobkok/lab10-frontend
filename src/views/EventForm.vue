@@ -8,17 +8,13 @@
       <BaseInput v-model="event.title" type="text" label="Title" />
 
       <h3>Who is your organizer?</h3>
-      <label>Select an Organizer</label>
-      <select v-model="event.organizer.id">
-        <option
-          v-for="option in GStore.organizers"
-          :value="option.id"
-          :key="option.id"
-          :selected="option.id === event.organizer.id"
-        >
-          {{ option.name }}
-        </option>
-      </select>
+
+      <BaseSelect
+        :options="GStore.organizers"
+        v-model="event.organizer.id"
+        label="Select an Organizer"
+      />
+
       <label>Description</label>
       <input
         v-model="event.description"
@@ -45,6 +41,7 @@
 
 <script>
 import EventService from '@/services/EventService.js'
+import BaseSelect from '@/components/BaseSelect.vue'
 export default {
   inject: ['GStore'],
   data() {
@@ -77,6 +74,7 @@ export default {
           this.$router.push('NetworkError')
         })
     }
-  }
+  },
+  components: { BaseSelect }
 }
 </script>
